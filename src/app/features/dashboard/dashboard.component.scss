@@ -1,0 +1,27 @@
+.dashboard {
+  padding: var(--spacing-4);
+
+  .balance {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 3rem;
+      margin: 10px 0;
+    }
+  }
+
+  .quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-5);
+  }
+
+  .charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-5);
+  }
+}

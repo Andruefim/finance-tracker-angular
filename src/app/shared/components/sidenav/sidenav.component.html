@@ -1,0 +1,20 @@
+<div class="main-layout">
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened class="sidenav-container">
+      <mat-nav-list>
+        <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
+        <mat-list-item routerLink="/transactions">Transactions</mat-list-item>
+        <mat-list-item routerLink="/categories">Categories</mat-list-item>
+        <mat-list-item routerLink="/budgeting">Budgeting</mat-list-item>
+        <mat-list-item routerLink="/reports">Reports</mat-list-item>
+        <mat-list-item routerLink="/settings">Settings</mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <ng-content />
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

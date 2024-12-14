@@ -1,0 +1,32 @@
+
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$cyan-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: dark,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+:root {
+  @include mat.toolbar-overrides(( container-background-color: var(--mat-sys-inverse-primary), container-text-color: var(--mat-sys-on-primary-container), ));
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 16px;
+  --spacing-4: 24px;
+  --spacing-5: 32px;
+  --box-shadow-default: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto,"Helvetica Neue", sans-serif;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}

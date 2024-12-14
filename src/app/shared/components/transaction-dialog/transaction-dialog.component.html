@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{ isIncome ? 'Add Income' : 'Add Expanse' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="transactionForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        @for (category of categories; track category) {
+          <mat-option [value]="category">
+            {{ category }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput formControlName="amount" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" type="date" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="transactionForm.invalid" (click)="onSubmit()">
+    Save
+  </button>
+</div>

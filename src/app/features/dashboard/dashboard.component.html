@@ -1,0 +1,24 @@
+<div class="dashboard">
+
+  <section class="balance">
+    <h2>Total Balance</h2>
+    <h1>{{ totalBalance | currency: 'USD' }}</h1>
+  </section>
+
+  <section class="quick-actions">
+    <button mat-raised-button color="primary" (click)="addIncome()">Add Income</button>
+    <button mat-raised-button color="warn" (click)="addExpense()">Add Expense</button>
+  </section>
+
+  <section class="charts">
+    <app-chart-card [title]="'Expenses by Category'">
+      <app-expenses-chart />
+    </app-chart-card>
+    <app-chart-card [title]="'Monthly Income and Expenses'">
+      <app-transactions-chart />
+    </app-chart-card>
+  </section>
+
+  <app-transactions-table />
+
+</div>
