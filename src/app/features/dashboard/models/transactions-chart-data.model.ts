@@ -6,7 +6,7 @@ export interface TransactionsRaw {
   }[]
 }
 
-export class TransactionsChart {
+export class TransactionsChartData {
   type: string;
   data: [number, number][];
   constructor(transactionsRawData: TransactionsRaw) {

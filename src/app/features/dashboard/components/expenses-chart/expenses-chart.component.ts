@@ -1,6 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { DashboardService } from '../../services/dashboard.service';
+import { ExpensesData } from '../../models/expenses-chart-data.model';
+
+const mock: ExpensesData[] = [
+  [ 'Food', 450 ],
+  [ 'Transport', 300 ],
+  [ 'Rent', 800 ],
+]
 
 @Component({
   selector: 'app-expenses-chart',
@@ -8,14 +16,16 @@ import { HighchartsChartModule } from 'highcharts-angular';
   templateUrl: './expenses-chart.component.html',
   styleUrl: './expenses-chart.component.scss'
 })
-export class ExpensesChartComponent {
+export class ExpensesChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
+  expensesData: ExpensesData[] = mock;
+  constructor(private dashboardService: DashboardService) { }
 
-  expenseCategoryData = [
-    { category: 'Food', amount: 450 },
-    { category: 'Transport', amount: 300 },
-    { category: 'Rent', amount: 800 },
-  ]
+  ngOnInit() {
+    this.dashboardService
+      .getExpensesChartData()
+      .subscribe(expensesChartData => this.expensesData = expensesChartData)
+  }
 
   chartOptions: Highcharts.Options = {
     chart: {
@@ -32,7 +42,7 @@ export class ExpensesChartComponent {
       type: 'pie',
       innerSize: '75%',
       borderRadius: 8,
-      data: this.expenseCategoryData.map(expense => [expense.category, expense.amount])
+      data: this.expensesData,
     }],
     plotOptions: {
       pie: {

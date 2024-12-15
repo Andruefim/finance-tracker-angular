@@ -7,6 +7,8 @@ import { TransactionsChartComponent } from './components/transactions-chart/tran
 import { ChartCardComponent } from '../../shared/components/chart-card/chart-card.component';
 import { TransactionDialogComponent } from '../../shared/components/transaction-dialog/transaction-dialog.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
+import { TransactionsService } from '../../shared/services/transactions.service';
+import { Transaction } from '../../shared/models/transaction.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,23 +28,31 @@ export class DashboardComponent {
   readonly dialog = inject(MatDialog);
   totalBalance: number = 1250.75;
 
+  constructor(private transactionsService: TransactionsService) { }
+
   addIncome() {
-    this.openTransactionDialog(true);
+    this.openTransactionDialog('income');
   }
 
   addExpense() {
-    this.openTransactionDialog(false);
+    this.openTransactionDialog('expense');
   }
 
-  openTransactionDialog(isIncome: boolean): void {
+  postTransaction(transaction: Transaction): void {
+    this.transactionsService
+      .postTransaction(transaction)
+      .subscribe(result => console.log('transactionPosted', result))
+  }
+
+  openTransactionDialog(type: string): void {
     const dialogRef = this.dialog.open(TransactionDialogComponent, {
       width: '400px',
-      data: { isIncome }
+      data: { type }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: Transaction) => {
       if (result) {
-        console.log('Transaction saved', result);
+        this.postTransaction(result)
       }
     })
   }

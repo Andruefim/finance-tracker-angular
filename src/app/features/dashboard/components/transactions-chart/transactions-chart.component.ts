@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { colors } from '../../../../constants';
-import { TransactionsService } from '../../services/transactions.service';
-import { TransactionsChart } from '../../models/transactions-chart.model';
+import { DashboardService } from '../../services/dashboard.service';
+import { TransactionsChartData } from '../../models/transactions-chart-data.model';
 
 const mock = [
   {
@@ -33,11 +33,11 @@ const mock = [
 })
 export class TransactionsChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
-  chartData!: TransactionsChart[];
-  constructor(private transactionsService: TransactionsService) { }
+  chartData!: TransactionsChartData[];
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this.transactionsService
+    this.dashboardService
       .getTransactionsChartData()
       .subscribe(transactionsChartData => this.chartData = transactionsChartData)
   }
@@ -72,7 +72,7 @@ export class TransactionsChartComponent implements OnInit {
       },
     },
     yAxis: {
-      title: { text: 'Value', style: { color: colors.CHART_GRID } },
+      title: { text: 'Amount', style: { color: colors.CHART_GRID } },
       labels: {
         style: { color: colors.CHART_GRID }
       }

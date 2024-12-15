@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Transaction } from '../../models/transaction.model';
-import { TransactionsService } from '../../services/transactions.service';
+import { Transaction } from '../../../../shared/models/transaction.model';
+import { DashboardService } from '../../services/dashboard.service';
 
 const mock: Transaction[] = [
   { id: 2, date: '08.12.2024', category: 'Food', amount: -50 },
@@ -22,10 +22,10 @@ const mock: Transaction[] = [
 })
 export class TransactionsTableComponent implements OnInit {
   transactionsData: Transaction[] = mock;
-  constructor(private transactionsService: TransactionsService) { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.transactionsService
+    this.dashboardService
       .getTransactionsTableData()
       .subscribe(transactionsTableData => this.transactionsData = transactionsTableData)
   }
