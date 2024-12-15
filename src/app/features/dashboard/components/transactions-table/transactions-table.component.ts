@@ -1,32 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Transaction } from '../../../../shared/models/transaction.model';
 import { DashboardService } from '../../services/dashboard.service';
 
-const mock: Transaction[] = [
-  { id: 2, date: '08.12.2024', category: 'Food', amount: -50 },
-  { id: 1, date: '08.11.2024', category: 'Salary', amount: 3000 },
-  { id: 0, date: '08.10.2024', category: 'Transport', amount: -100 },
-];
 
 @Component({
   selector: 'app-transactions-table',
   imports: [
     MatTableModule,
     CurrencyPipe,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './transactions-table.component.html',
   styleUrl: './transactions-table.component.scss'
 })
 export class TransactionsTableComponent implements OnInit {
-  transactionsData: Transaction[] = mock;
-  constructor(private dashboardService: DashboardService) { }
+  transactionsData!: Transaction[];
+
+  constructor(
+    private dashboardService: DashboardService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.dashboardService
       .getTransactionsTableData()
-      .subscribe(transactionsTableData => this.transactionsData = transactionsTableData)
+      .subscribe({
+        next: (result) => {
+          this.transactionsData = result || [];
+          this.cdr.detectChanges()
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
   }
 }

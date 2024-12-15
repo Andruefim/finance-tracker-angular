@@ -8,6 +8,7 @@ const routeConfig: Routes = [
   //{ path: 'budgeting', component: BudgetingComponent },
   //{ path: 'reports', component: ReportsComponent },
   //{ path: 'settings', component: SettingsComponent },
+  { path: 'swagger', redirectTo: '' },
   { path: '**', redirectTo: 'dashboard' },
 ]
 

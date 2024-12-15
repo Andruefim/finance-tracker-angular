@@ -39,7 +39,14 @@ export class TransactionsChartComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService
       .getTransactionsChartData()
-      .subscribe(transactionsChartData => this.chartData = transactionsChartData)
+      .subscribe({
+          next: (result) => {
+            this.chartData = result;
+          },
+          error: err => {
+            console.error(err);
+          }
+       })
   }
 
   chartOptions: Highcharts.Options = {

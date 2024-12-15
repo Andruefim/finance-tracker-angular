@@ -41,7 +41,14 @@ export class DashboardComponent {
   postTransaction(transaction: Transaction): void {
     this.transactionsService
       .postTransaction(transaction)
-      .subscribe(result => console.log('transactionPosted', result))
+      .subscribe({
+        next: (result) => {
+          console.log('transactionPosted', result)
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
   }
 
   openTransactionDialog(type: string): void {

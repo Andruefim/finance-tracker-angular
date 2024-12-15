@@ -24,7 +24,14 @@ export class ExpensesChartComponent implements OnInit {
   ngOnInit() {
     this.dashboardService
       .getExpensesChartData()
-      .subscribe(expensesChartData => this.expensesData = expensesChartData)
+      .subscribe({
+        next: (result) => {
+          this.expensesData = result;
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
   }
 
   chartOptions: Highcharts.Options = {

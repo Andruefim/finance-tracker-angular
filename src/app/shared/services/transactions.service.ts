@@ -24,7 +24,7 @@ export class TransactionsService {
 
   postTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http
-      .post<Transaction>('/transaction', transaction, httpOptions)
+      .post<Transaction>('/api/Transactions', transaction, httpOptions)
       .pipe(
         catchError(this.handleError)
       )
