@@ -16,23 +16,10 @@ const mock: ExpensesData[] = [
   templateUrl: './expenses-chart.component.html',
   styleUrl: './expenses-chart.component.scss'
 })
-export class ExpensesChartComponent implements OnInit {
+export class ExpensesChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
   expensesData: ExpensesData[] = mock;
   constructor(private dashboardService: DashboardService) { }
-
-  ngOnInit() {
-    //this.dashboardService
-    //  .getExpensesChartData()
-    //  .subscribe({
-    //    next: (result) => {
-    //      this.expensesData = result;
-    //    },
-    //    error: err => {
-    //      console.error(err);
-    //    }
-    //  })
-  }
 
   chartOptions: Highcharts.Options = {
     chart: {

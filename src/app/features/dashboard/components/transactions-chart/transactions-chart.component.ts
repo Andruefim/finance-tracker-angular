@@ -31,23 +31,11 @@ const mock = [
   templateUrl: './transactions-chart.component.html',
   styleUrl: './transactions-chart.component.scss'
 })
-export class TransactionsChartComponent implements OnInit {
+export class TransactionsChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
   chartData!: TransactionsChartData[];
   constructor(private dashboardService: DashboardService) { }
 
-  ngOnInit(): void {
-    this.dashboardService
-      .getTransactionsChartData()
-      .subscribe({
-          next: (result) => {
-            this.chartData = result;
-          },
-          error: err => {
-            console.error(err);
-          }
-       })
-  }
 
   chartOptions: Highcharts.Options = {
     chart: {
