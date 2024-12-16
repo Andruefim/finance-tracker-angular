@@ -22,16 +22,16 @@ export class ExpensesChartComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.dashboardService
-      .getExpensesChartData()
-      .subscribe({
-        next: (result) => {
-          this.expensesData = result;
-        },
-        error: err => {
-          console.error(err);
-        }
-      })
+    //this.dashboardService
+    //  .getExpensesChartData()
+    //  .subscribe({
+    //    next: (result) => {
+    //      this.expensesData = result;
+    //    },
+    //    error: err => {
+    //      console.error(err);
+    //    }
+    //  })
   }
 
   chartOptions: Highcharts.Options = {

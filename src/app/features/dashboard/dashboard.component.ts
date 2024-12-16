@@ -9,6 +9,7 @@ import { TransactionDialogComponent } from '../../shared/components/transaction-
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { TransactionsService } from '../../shared/services/transactions.service';
 import { Transaction } from '../../shared/models/transaction.model';
+import { DashboardService } from './services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,9 +27,9 @@ import { Transaction } from '../../shared/models/transaction.model';
 })
 export class DashboardComponent {
   readonly dialog = inject(MatDialog);
+  readonly transactionsService = inject(TransactionsService);
+  readonly dashboardService = inject(DashboardService);
   totalBalance: number = 1250.75;
-
-  constructor(private transactionsService: TransactionsService) { }
 
   addIncome() {
     this.openTransactionDialog('income');
@@ -44,6 +45,7 @@ export class DashboardComponent {
       .subscribe({
         next: (result) => {
           console.log('transactionPosted', result)
+          this.dashboardService.loadDashboardData()
         },
         error: err => {
           console.error(err);
