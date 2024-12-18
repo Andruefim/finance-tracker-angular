@@ -1,27 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DashboardService } from '../../services/dashboard.service';
-import { ExpensesData } from '../../models/expenses-chart-data.model';
+import { ExpensesChartData, ExpensesData } from '../../models/expenses-chart-data.model';
+import { AsyncPipe } from '@angular/common';
+import { map, Observable } from 'rxjs';
 
-const mock: ExpensesData[] = [
-  [ 'Food', 450 ],
-  [ 'Transport', 300 ],
-  [ 'Rent', 800 ],
-]
 
 @Component({
   selector: 'app-expenses-chart',
-  imports: [HighchartsChartModule],
+  imports: [
+    HighchartsChartModule,
+    AsyncPipe
+  ],
   templateUrl: './expenses-chart.component.html',
-  styleUrl: './expenses-chart.component.scss'
+  styleUrl: './expenses-chart.component.scss',
 })
 export class ExpensesChartComponent {
+  readonly dashboardService = inject(DashboardService);
+  readonly destroyRef = inject(DestroyRef);
   Highcharts: typeof Highcharts = Highcharts;
-  expensesData: ExpensesData[] = mock;
-  constructor(private dashboardService: DashboardService) { }
+  chartOptions$: Observable<Highcharts.Options> = this.dashboardService.dashboardData$.pipe(
+    map(({ expensesChartData }) => ({
+      ...this.baseChartOptions,
+      series: [{
+        ...this.seriesOptions,
+        data: expensesChartData
+      }]
+    }))
+  )
 
-  chartOptions: Highcharts.Options = {
+
+  seriesOptions: Highcharts.SeriesPieOptions = {
+    type: 'pie',
+    innerSize: '75%',
+    borderRadius: 8,
+  }
+
+  baseChartOptions: Highcharts.Options = {
     chart: {
       type: 'pie',
       backgroundColor: '',
@@ -32,19 +48,11 @@ export class ExpensesChartComponent {
          display: 'none'
       }
     },
-    series: [{
-      type: 'pie',
-      innerSize: '75%',
-      borderRadius: 8,
-      data: this.expensesData,
-    }],
+    series: [],
     plotOptions: {
       pie: {
         opacity: 0.85,
       }
-      //pie: {
-      //  colors: Highcharts.getOptions().colors!.map((c, i) => constants.CHART_COLORS[i] ?? c),
-      //}
     }
   };
 }
