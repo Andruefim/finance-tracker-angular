@@ -18,5 +18,5 @@ import { DashboardData, DashboardService } from '../../services/dashboard.servic
 })
 export class TransactionsTableComponent {
   readonly dashboardService: DashboardService = inject(DashboardService)
-  dashboardData = this.dashboardService.dashboardData;
+  dashboardData$ = this.dashboardService.dashboardData$;
 }

@@ -57,7 +57,7 @@ export class TransactionDialogComponent {
   transactionForm = this.formBuilder.group({
     category: ['', Validators.required],
     amount: [0, [Validators.required, Validators.min(0.01)]],
-    date: [new Date(), Validators.required],
+    date: [new Date()],
     description: [''],
   })
 

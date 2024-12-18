@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExpensesChartComponent } from './components/expenses-chart/expenses-chart.component';
 import { TransactionsChartComponent } from './components/transactions-chart/transactions-chart.component';
 import { ChartCardComponent } from '../../shared/components/chart-card/chart-card.component';
@@ -29,6 +30,7 @@ export class DashboardComponent {
   readonly dialog = inject(MatDialog);
   readonly transactionsService = inject(TransactionsService);
   readonly dashboardService = inject(DashboardService);
+  readonly destroyRef = inject(DestroyRef);
   totalBalance: number = 1250.75;
 
   addIncome() {
@@ -42,10 +44,11 @@ export class DashboardComponent {
   postTransaction(transaction: Transaction): void {
     this.transactionsService
       .postTransaction(transaction)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (result) => {
           console.log('transactionPosted', result)
-          this.dashboardService.loadDashboardData()
+          this.dashboardService.refetchDashboardData();
         },
         error: err => {
           console.error(err);

@@ -5,7 +5,7 @@ export class Transaction {
   date: string;
   category: string;
   amount: number;
-  description?: string; 
+  description?: string;
 
   constructor(transactionData: Transaction) {
     this.id = transactionData.id;
