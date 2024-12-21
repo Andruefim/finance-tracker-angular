@@ -6,25 +6,6 @@ import { colors } from '../../../../constants';
 import { DashboardService } from '../../services/dashboard.service';
 import { map, Observable } from 'rxjs';
 
-const mock = [
-  {
-    type: 'Income',
-    data:
-      [
-        [new Date('08.10.2024').getTime(), 2500],
-        [new Date('08.11.2024').getTime(), 3000],
-        [new Date('08.12.2024').getTime(), 2800]
-      ]
-  },
-  {
-    type: 'Expenses',
-    data: [
-      [new Date('08.10.2024').getTime(), 2300],
-      [new Date('08.11.2024').getTime(), 2500],
-      [new Date('08.12.2024').getTime(), 2300]
-    ]
-  },
-];
 
 @Component({
   selector: 'app-transactions-chart',
@@ -68,10 +49,7 @@ export class TransactionsChartComponent {
       }
     },
     xAxis: {
-      title: {
-        text: 'Month', style: { color: colors.CHART_GRID }
-      },
-      type: 'datetime',
+      type: 'category',
       labels: {
         style: { color: colors.CHART_GRID }
       },

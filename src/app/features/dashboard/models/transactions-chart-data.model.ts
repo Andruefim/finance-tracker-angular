@@ -8,12 +8,34 @@ export interface TransactionsRaw {
   data: TransactionsRawData[]
 }
 
+export type ChartData = [string, number]
+
 export class TransactionsChartData {
-  type: TransactionsRaw['type'];
-  data: [number, number][];
-  constructor(transactionsRawData: TransactionsRaw) {
-    this.type = transactionsRawData.type;
-    this.data = transactionsRawData.data
-      .map(transaction => [new Date(transaction.date).getTime() ?? null, transaction.amount])
+  constructor(public type: TransactionsRaw['type'], public data: ChartData[]) {}
+
+  static toMonthlyChartData(transactionsRawData: TransactionsRaw) {
+    const months = new Set();
+    let chartData: ChartData[] = [];
+
+    transactionsRawData.data
+      .forEach(t => months.add(this.getMonthName(t.date)));
+
+    months.forEach(month => {
+      chartData.push([
+        month as string,
+        transactionsRawData.data
+          .filter(t => this.getMonthName(t.date) === month)
+          .reduce((acc, curr) => acc + curr.amount, 0)
+      ])
+    })
+
+    return new TransactionsChartData(
+      transactionsRawData.type,
+      chartData
+    )
+  }
+
+  static getMonthName(date: string) {
+    return new Date(date).toLocaleString('default', { month: 'long' });
   }
 }

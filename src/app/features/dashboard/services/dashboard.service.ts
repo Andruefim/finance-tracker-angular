@@ -36,7 +36,7 @@ export class DashboardService {
       this.http
         .get<TransactionsRaw[]>('/api/transactions/charts/transactions-chart')
         .pipe(
-          map(transactions => transactions.map(transaction => new TransactionsChartData(transaction))),
+          map(chartData => chartData.map(seriesData => TransactionsChartData.toMonthlyChartData(seriesData))),
           catchError(this.handleError)
         )
     )
