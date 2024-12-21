@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DashboardService } from '../../services/dashboard.service';
@@ -18,7 +18,6 @@ import { map, Observable } from 'rxjs';
 })
 export class ExpensesChartComponent {
   readonly dashboardService = inject(DashboardService);
-  readonly destroyRef = inject(DestroyRef);
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions$: Observable<Highcharts.Options> = this.dashboardService.dashboardData$.pipe(
     map(({ expensesChartData }) => ({

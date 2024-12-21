@@ -1,5 +1,8 @@
-<highcharts-chart
-  [Highcharts]="Highcharts"
-  [options]="chartOptions"
->
-</highcharts-chart>
+@if (chartOptions$ | async; as chartOptions) {
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+  >
+  </highcharts-chart>
+}
+

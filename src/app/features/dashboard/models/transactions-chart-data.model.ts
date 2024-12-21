@@ -1,13 +1,15 @@
+interface TransactionsRawData {
+  date: string;
+  amount: number;
+}
+
 export interface TransactionsRaw {
-  type: string;
-  data: {
-    date: string;
-    amount: number;
-  }[]
+  type: 'Income' | 'Expenses';
+  data: TransactionsRawData[]
 }
 
 export class TransactionsChartData {
-  type: string;
+  type: TransactionsRaw['type'];
   data: [number, number][];
   constructor(transactionsRawData: TransactionsRaw) {
     this.type = transactionsRawData.type;

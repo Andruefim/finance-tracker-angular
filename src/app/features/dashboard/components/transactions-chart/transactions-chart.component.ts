@@ -1,43 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { colors } from '../../../../constants';
 import { DashboardService } from '../../services/dashboard.service';
-import { TransactionsChartData } from '../../models/transactions-chart-data.model';
+import { map, Observable } from 'rxjs';
 
 const mock = [
   {
     type: 'Income',
     data:
       [
-        [ new Date('08.10.2024').getTime(), 2500 ],
-        [ new Date('08.11.2024').getTime(), 3000 ],
-        [ new Date('08.12.2024').getTime(), 2800 ]
+        [new Date('08.10.2024').getTime(), 2500],
+        [new Date('08.11.2024').getTime(), 3000],
+        [new Date('08.12.2024').getTime(), 2800]
       ]
   },
   {
     type: 'Expenses',
     data: [
-      [ new Date('08.10.2024').getTime(), 2300 ],
-      [ new Date('08.11.2024').getTime(), 2500 ],
-      [ new Date('08.12.2024').getTime(), 2300 ]
+      [new Date('08.10.2024').getTime(), 2300],
+      [new Date('08.11.2024').getTime(), 2500],
+      [new Date('08.12.2024').getTime(), 2300]
     ]
   },
-];;
+];
 
 @Component({
   selector: 'app-transactions-chart',
-  imports: [HighchartsChartModule],
+  imports: [HighchartsChartModule, AsyncPipe],
   templateUrl: './transactions-chart.component.html',
   styleUrl: './transactions-chart.component.scss'
 })
 export class TransactionsChartComponent {
+  readonly dashboardService = inject(DashboardService);
   Highcharts: typeof Highcharts = Highcharts;
-  chartData!: TransactionsChartData[];
-  constructor(private dashboardService: DashboardService) { }
+  chartOptions$: Observable<Highcharts.Options> = this.dashboardService.dashboardData$.pipe(
+    map(({ transactionsChartData }) => ({
+      ...this.baseChartOptions,
+      series: transactionsChartData?.map(chartData => ({
+        type: 'area',
+        name: chartData.type,
+        data: chartData.data,
+      }))
+    }))
+  )
 
 
-  chartOptions: Highcharts.Options = {
+  baseChartOptions: Highcharts.Options = {
     chart: {
       backgroundColor: '',
     },
@@ -72,10 +82,6 @@ export class TransactionsChartComponent {
         style: { color: colors.CHART_GRID }
       }
     },
-    series: (this.chartData ?? mock)?.map(item => ({
-      type: 'area',
-      name: item.type,
-      data: item.data,
-    })),
+    series: [],
   };
 }

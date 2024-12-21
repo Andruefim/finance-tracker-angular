@@ -34,7 +34,7 @@ export class DashboardService {
   private transactionsChartData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<TransactionsRaw[]>('/transactionsChart')
+        .get<TransactionsRaw[]>('/api/transactions/charts/transactions-chart')
         .pipe(
           map(transactions => transactions.map(transaction => new TransactionsChartData(transaction))),
           catchError(this.handleError)
@@ -63,7 +63,8 @@ export class DashboardService {
   )
 
   dashboardData$: Observable<DashboardData> = combineLatest({
+    transactionsChartData: this.transactionsChartData$,
+    expensesChartData: this.expensesChartData$,
     transactionsTableData: this.transactionsTableData$,
-    expensesChartData: this.expensesChartData$
   })
 }
