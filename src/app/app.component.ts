@@ -13,6 +13,7 @@ import { LayoutComponent } from './core/layout/layout.component';
       RouterModule,
       MatSidenavModule,
       MatListModule,
+      LayoutComponent
     ],
 })
 export class AppComponent {

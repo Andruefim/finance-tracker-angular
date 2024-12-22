@@ -1,16 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExpensesChartComponent } from './components/expenses-chart/expenses-chart.component';
 import { TransactionsChartComponent } from './components/transactions-chart/transactions-chart.component';
 import { ChartCardComponent } from '../../shared/components/chart-card/chart-card.component';
-import { TransactionDialogComponent } from '../../shared/components/transaction-dialog/transaction-dialog.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
-import { TransactionsService } from '../../shared/services/transactions.service';
-import { Transaction } from '../../shared/models/transaction.model';
-import { DashboardService } from './services/dashboard.service';
+import { TransactionDialogButtonComponent } from './components/transaction-dialog-button/transaction-dialog-button.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,52 +15,14 @@ import { DashboardService } from './services/dashboard.service';
     TransactionsChartComponent,
     ChartCardComponent,
     TransactionsTableComponent,
-    CurrencyPipe
+    CurrencyPipe,
+    TransactionDialogButtonComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  readonly dialog = inject(MatDialog);
-  readonly transactionsService = inject(TransactionsService);
-  readonly dashboardService = inject(DashboardService);
-  readonly destroyRef = inject(DestroyRef);
   totalBalance: number = 1250.75;
 
-  addIncome() {
-    this.openTransactionDialog('income');
-  }
-
-  addExpense() {
-    this.openTransactionDialog('expense');
-  }
-
-  postTransaction(transaction: Transaction): void {
-    this.transactionsService
-      .postTransaction(transaction)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (result) => {
-          console.log('transactionPosted', result)
-          this.dashboardService.refetchDashboardData();
-        },
-        error: err => {
-          console.error(err);
-        }
-      })
-  }
-
-  openTransactionDialog(type: string): void {
-    const dialogRef = this.dialog.open(TransactionDialogComponent, {
-      width: '400px',
-      data: { type }
-    });
-
-    dialogRef.afterClosed().subscribe((result: Transaction) => {
-      if (result) {
-        this.postTransaction(result)
-      }
-    })
-  }
 }

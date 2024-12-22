@@ -1,0 +1,34 @@
+<ng-template #transactionForm>
+  <div mat-dialog-content>
+    <form [formGroup]="transactionFormGroup">
+      <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          @for (category of categories; track category) {
+          <mat-option [value]="category">
+            {{ category }}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input matInput formControlName="amount" type="number" />
+      </mat-form-field>
+
+      <!--<mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="date" type="date" />
+      </mat-form-field>-->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+</ng-template>
+
+<button mat-raised-button color="primary" (click)="openDialog(transactionForm)">{{ title }}</button>
+

@@ -6,8 +6,8 @@
   </section>
 
   <section class="quick-actions">
-    <button mat-raised-button color="primary" (click)="addIncome()">Add Income</button>
-    <button mat-raised-button color="warn" (click)="addExpense()">Add Expense</button>
+    <app-transaction-dialog-button [type]="'income'"/>
+    <app-transaction-dialog-button [type]="'expense'" />
   </section>
 
   <section class="charts">

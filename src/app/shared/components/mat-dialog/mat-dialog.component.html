@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf="data.contentTemplate">
+    <ng-container *ngTemplateOutlet="data.contentTemplate"></ng-container>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="data.isFormInvalid?.()"
+    (click)="onSubmit()"
+  >
+    Save
+  </button>
+</div>
