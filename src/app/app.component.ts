@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { LayoutComponent } from './core/layout/layout.component';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -10,10 +7,7 @@ import { LayoutComponent } from './core/layout/layout.component';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     imports: [
-      RouterModule,
-      MatSidenavModule,
-      MatListModule,
-      LayoutComponent
+      RouterOutlet
     ],
 })
 export class AppComponent {

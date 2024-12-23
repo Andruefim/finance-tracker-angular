@@ -1,0 +1,18 @@
+mat-card {
+  padding: var(--spacing-2) var(--spacing-4);
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  gap: var(--spacing-2)
+}
+
+#auth-card-contianer {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  height: 64px;
+}
+

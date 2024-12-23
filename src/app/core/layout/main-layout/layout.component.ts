@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { ToolbarComponent } from '../components/toolbar/toolbar.component';
+import { SidenavComponent } from '../components/sidenav/sidenav.component';
 
 @Component({
   selector: 'app-layout',

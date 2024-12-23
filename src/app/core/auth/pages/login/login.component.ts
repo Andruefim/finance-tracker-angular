@@ -3,6 +3,7 @@ import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthCardComponent } from '../../components/auth-card/auth-card.component';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
+    AuthCardComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
