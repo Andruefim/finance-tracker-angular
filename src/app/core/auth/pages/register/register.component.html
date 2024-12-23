@@ -2,16 +2,21 @@
 <app-auth-card title="Register">
   <form [formGroup]="registerForm" (submit)="register()">
 
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" type="email" />
-      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" type="email" />
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" formControlName="password" type="password" />
-      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>User name</mat-label>
+      <input matInput placeholder="User name" formControlName="username" type="text" />
+    </mat-form-field>
 
-      <button mat-raised-button color="primary" [disabled]="registerForm.invalid" type="submit">Register</button>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Password" formControlName="password" type="password" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="registerForm.invalid" type="submit">Register</button>
   </form>
 </app-auth-card>

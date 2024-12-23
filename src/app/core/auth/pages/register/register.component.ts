@@ -22,6 +22,7 @@ export class RegisterComponent {
   private formBuider = inject(FormBuilder);
 
   registerForm = this.formBuider.group({
+    username: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required]
   })
