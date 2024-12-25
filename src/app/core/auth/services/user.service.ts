@@ -33,7 +33,7 @@ export class UserService {
     password: string;
   }): Observable<User> {
     return this.http
-      .post<User>("/users/login", { user: credentials })
+      .post<User>("/api/Authenticate/login", credentials)
       .pipe(tap((user) => this.setAuth(user)));
   }
 
@@ -43,7 +43,7 @@ export class UserService {
     password: string;
   }): Observable<User> {
     return this.http
-      .post<User>("/users", { user: credentials })
+      .post<User>("/api/Authenticate/register", credentials)
       .pipe(tap((user) => this.setAuth(user)));
   }
 
