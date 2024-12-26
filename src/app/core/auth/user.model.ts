@@ -3,4 +3,5 @@ export interface User {
   email: string;
   totalBalance: number;
   token: string;
+  userId: string;
 }

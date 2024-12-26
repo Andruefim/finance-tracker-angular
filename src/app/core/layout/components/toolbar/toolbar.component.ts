@@ -4,7 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { UserService } from '../../../auth/services/user.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,12 +14,13 @@ import { AsyncPipe } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    AsyncPipe
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
 })
 export class ToolbarComponent {
   readonly userService = inject(UserService);
-  currentUser$ = this.userService.currentUser$;
+  currentUser$ = this.userService.currentUser$
 }

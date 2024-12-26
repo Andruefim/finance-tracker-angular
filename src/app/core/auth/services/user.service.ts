@@ -15,7 +15,6 @@ export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUserAction$ = this.currentUserSubject
     .asObservable()
-    .pipe(distinctUntilChanged());
 
   //public isAuthenticated = !!this.jwtService.token;
   public isAuthenticated = this.currentUserAction$.pipe(map((user) => !!user));
@@ -24,7 +23,7 @@ export class UserService {
   currentUser$ = this.currentUserAction$.pipe(
     switchMap((user) => {
       if (user) {
-        return EMPTY;
+        return this.currentUserSubject.asObservable();
       }
       return this.http
         .get<User>('/api/Authenticate/user').pipe(
@@ -58,7 +57,7 @@ export class UserService {
   }
 
   setAuth(user: User): void {
-    this.jwtService.saveToken(user.token);
+    user.token && this.jwtService.saveToken(user.token);
     this.currentUserSubject.next(user)
   }
 

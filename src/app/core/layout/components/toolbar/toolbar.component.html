@@ -13,7 +13,9 @@
     </button>
     <a mat-button>Home</a>
     <a mat-button>About</a>
-    <a mat-button>{{ (currentUser$ | async)?.email }}</a>
+    <ng-container *ngIf="currentUser$ | async as user">
+      <a mat-button>{{ user.email }}</a>
+    </ng-container>
     <div>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
