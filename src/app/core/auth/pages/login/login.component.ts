@@ -35,8 +35,9 @@ export class LoginComponent {
       email: this.loginForm.value.email ?? '',
       password: this.loginForm.value.password ?? ''
     })
-      .subscribe(result => {
-        this.router.navigate(['/dashboard']);
+      .subscribe({
+        next: response => response.token && this.router.navigate(['/dashboard']),
+        error: (error) => console.error('Error:', error),
       })
   }
 }

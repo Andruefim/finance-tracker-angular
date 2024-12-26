@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 
@@ -7,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
   imports: [
     MatSidenavModule,
     MatListModule,
+    RouterModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'

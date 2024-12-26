@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, EMPTY, Observable, catchError, distinctUntilChanged, map, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, distinctUntilChanged, map, shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { Router } from "@angular/router";
 import { User } from '../user.model';
 import { JwtService } from './jwt.service';
@@ -13,20 +13,31 @@ export class UserService {
   readonly router = inject(Router);
   readonly jwtService = inject(JwtService);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser = this.currentUserSubject
+  public currentUserAction$ = this.currentUserSubject
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  public isAuthenticated = this.currentUser.pipe(map(user => !!user));
+  //public isAuthenticated = !!this.jwtService.token;
+  public isAuthenticated = this.currentUserAction$.pipe(map((user) => !!user));
 
-  currentUser$ = this.http
-    .get<User>('/user').pipe(
-      tap({
-        next: user => this.setAuth(user),
-        error: () => this.purgeAuth(),
-      }),
-      shareReplay(1),
+
+  currentUser$ = this.currentUserAction$.pipe(
+    switchMap((user) => {
+      if (user) {
+        return EMPTY;
+      }
+      return this.http
+        .get<User>('/api/Authenticate/user').pipe(
+          tap({
+            next: user => this.setAuth(user),
+            error: () => this.purgeAuth(),
+          }),
+          shareReplay(1),
+        )
+    }
     )
+  );
+
 
   login(credentials: {
     email: string;
@@ -41,10 +52,9 @@ export class UserService {
     username: string;
     email: string;
     password: string;
-  }): Observable<User> {
+  }): Observable<{ message: string }> {
     return this.http
-      .post<User>("/api/Authenticate/register", credentials)
-      .pipe(tap((user) => this.setAuth(user)));
+      .post<{ message: string }>("/api/Authenticate/register", credentials)
   }
 
   setAuth(user: User): void {

@@ -39,9 +39,13 @@ export class RegisterComponent {
       email: this.registerForm.value.email ?? '',
       password: this.registerForm.value.password ?? '',
     })
-      .subscribe(result => {
-        this.router.navigate(['/auth/login'])
-      })
+      .subscribe({
+        next: (response) => {
+          response.message === 'User registered successfully'
+            && this.router.navigate(['/auth/login'])
+        },
+        error: (error) => console.error('Error:', error),
+      });
   }
 
   public validateAreEqual(c: AbstractControl): { notSame: boolean } | null {
