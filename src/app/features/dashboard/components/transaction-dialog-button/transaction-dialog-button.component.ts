@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, Input, input, TemplateRef } from '@angular/core';
 import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   MatDialogActions,
@@ -15,18 +15,6 @@ import { TransactionsService } from '../../../../shared/services/transactions.se
 import { DashboardService } from '../../services/dashboard.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-type TransactionType = 'income' | 'expense';
-
-const DIALOG_OPTIONS = {
-  'income': {
-    categories: ['Salary', 'Freelance', 'Investments'],
-    title: 'Add Income'
-  },
-  'expense': {
-    categories: ['Food', 'Transport', 'Rent', 'Shopping'],
-    title: 'Add Expense'
-  }
-}
 
 @Component({
   selector: 'app-transaction-dialog-button',
@@ -51,10 +39,8 @@ export class TransactionDialogButtonComponent {
   readonly transactionsService = inject(TransactionsService);
   readonly formBuilder = inject(FormBuilder);
   readonly destroyRef = inject(DestroyRef);
-  @Input() type: TransactionType = 'expense'; 
-
-  categories = DIALOG_OPTIONS[this.type].categories;
-  title = DIALOG_OPTIONS[this.type].title;
+  title = input.required<string>();
+  categories = input.required<string[]>();
 
   transactionFormGroup = this.formBuilder.group({
     category: ['', Validators.required],
@@ -95,7 +81,7 @@ export class TransactionDialogButtonComponent {
   transformSubmitValues(formValue: Transaction): Transaction {
     const submitValues = formValue;
 
-    if (this.type !== 'income') {
+    if (this.title() !== 'Add Income') {
       submitValues.amount = -Math.abs(submitValues.amount);
     }
 

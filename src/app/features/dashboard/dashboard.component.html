@@ -6,8 +6,14 @@
   </section>
 
   <section class="quick-actions">
-    <app-transaction-dialog-button [type]="'income'"/>
-    <app-transaction-dialog-button [type]="'expense'" />
+    <app-transaction-dialog-button 
+      [title]="'Add Income'" 
+      [categories]="['Salary', 'Freelance', 'Investments']">
+    </app-transaction-dialog-button>
+    <app-transaction-dialog-button 
+      [title]="'Add Expense'" 
+      [categories]="['Food', 'Transport', 'Rent', 'Shopping']">
+    </app-transaction-dialog-button>
   </section>
 
   <section class="charts">
