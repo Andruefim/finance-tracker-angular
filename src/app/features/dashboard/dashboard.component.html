@@ -2,7 +2,7 @@
 
   <section class="balance">
     <h2>Total Balance</h2>
-    <h1>{{ totalBalance | currency: 'USD' }}</h1>
+    <h1>{{ (dashboardData$ | async)?.transactionsTableData | totalBalance | currency: 'USD' }}</h1>
   </section>
 
   <section class="quick-actions">
