@@ -11,6 +11,8 @@
       <input matInput placeholder="Password" formControlName="password" type="password" />
     </mat-form-field>
 
+    <p>Dont have an account? <a href="/auth/register">Register</a></p>
+
     <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">Login</button>
   </form>
 </app-auth-card>

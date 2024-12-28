@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, distinctUntilChanged, map, shareReplay, startWith, switchMap, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, distinctUntilChanged, map, shareReplay, switchMap, tap } from 'rxjs';
 import { Router } from "@angular/router";
 import { User } from '../user.model';
 import { JwtService } from './jwt.service';
@@ -66,7 +66,7 @@ export class UserService {
   purgeAuth(): void {
     this.jwtService.destroyToken();
     this.currentUserSubject.next(null);
-    void this.router.navigate(["/auth/login"])
+    !window.location.href.includes('auth') && void this.router.navigate(["/auth/login"])
   }
 
   logout(): void {

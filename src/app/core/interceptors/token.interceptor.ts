@@ -3,7 +3,7 @@ import { HttpInterceptorFn } from "@angular/common/http";
 import { JwtService } from "../auth/services/jwt.service";
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(JwtService).token;
+  const token = inject(JwtService).getToken();
 
   const request = req.clone({
     setHeaders: {
