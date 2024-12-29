@@ -1,7 +1,7 @@
 .sidenav-container {
   border-right: 1px solid var(--mat-sys-outline-variant);
   width: 240px !important;
-  padding: 16px 8px;
+  padding: var(--spacing-4) var(--spacing-2);
   overflow: auto;
   box-sizing: border-box;
 }
