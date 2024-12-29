@@ -14,5 +14,12 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
-
+  navLinksMapper = [
+    { path: '/dashboard', title: 'Dashboard' },
+    { path: '/transactions', title: 'Transactions' },
+    { path: '/categories', title: 'Categories' },
+    { path: '/budgeting', title: 'Budgeting' },
+    { path: '/reports', title: 'Reports' },
+    { path: '/settings', title: 'Settings' },
+  ]
 }

@@ -7,7 +7,6 @@ import { Transaction } from '../../../shared/models/transaction.model';
 
 export class TotalBalancePipe implements PipeTransform {
   transform(transactions?: Transaction[]): number {
-    console.log('pipe', transactions)
     if (!transactions?.length) return 0;
 
     return transactions.reduce((acc, curr) => acc + curr.amount, 0);

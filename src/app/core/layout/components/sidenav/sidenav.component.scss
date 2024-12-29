@@ -13,3 +13,12 @@
 .mat-mdc-list-item {
   text-align: left;
 }
+
+.active-link {
+  background-color: rgb(224, 227, 226, 0.08);
+
+  &::before {
+    display: none;
+  }
+}
+

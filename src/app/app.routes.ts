@@ -5,16 +5,18 @@ import { RegisterComponent } from './core/auth/pages/register/register.component
 import { LayoutComponent } from './core/layout/main-layout/layout.component';
 import { MinimalLayoutComponent } from './core/layout/minimal-layout/minimal-layout.component';
 import { AuthGuard } from './core/auth/auth.guard';
+import { CategoriesComponent } from './features/categories/categories.component';
 
 const routeConfig: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: LayoutComponent,
     canActivate: [
       AuthGuard
     ],
     children: [
-      { path: '', component: DashboardComponent }
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'categories', component: CategoriesComponent },
     ]
   },
 

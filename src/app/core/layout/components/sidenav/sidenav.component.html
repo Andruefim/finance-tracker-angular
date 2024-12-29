@@ -2,12 +2,14 @@
   <mat-sidenav-container autosize>
     <mat-sidenav mode="side" opened class="sidenav-container">
       <mat-nav-list>
-        <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
-        <mat-list-item routerLink="/transactions">Transactions</mat-list-item>
-        <mat-list-item routerLink="/categories">Categories</mat-list-item>
-        <mat-list-item routerLink="/budgeting">Budgeting</mat-list-item>
-        <mat-list-item routerLink="/reports">Reports</mat-list-item>
-        <mat-list-item routerLink="/settings">Settings</mat-list-item>
+        @for (navLink of navLinksMapper; track navLink.path) {
+          <mat-list-item
+            routerLink="{{ navLink.path }}"
+            routerLinkActive="active-link"
+          >
+            {{ navLink.title }}
+          </mat-list-item>
+        }
       </mat-nav-list>
     </mat-sidenav>
 
