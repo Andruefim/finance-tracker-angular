@@ -25,16 +25,18 @@
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: var(--spacing-4);
 
-      .category-card {
-        background: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        border-radius: var(--spacing-2);
-      }
+        .category-card {
+          background: white;
+          box-shadow: var(--box-shadow-default);
+          border-radius: var(--spacing-2);
+        }
       }
     }
   }
 
-
+  mat-toolbar {
+    background: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low));
+  }
 
   mat-paginator {
     align-self: center;

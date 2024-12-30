@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatToolbar } from '@angular/material/toolbar';
 
 interface Category {
   name: string;
@@ -17,7 +18,8 @@ interface Category {
     MatCardTitle,
     MatCardContent,
     MatCardActions,
-    MatButton
+    MatButton,
+    MatToolbar
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'

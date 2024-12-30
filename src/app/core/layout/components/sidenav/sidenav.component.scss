@@ -1,12 +1,30 @@
-.sidenav-container {
-  border-right: 1px solid var(--mat-sys-outline-variant);
-  width: 240px !important;
-  padding: var(--spacing-4) var(--spacing-2);
-  overflow: auto;
-  box-sizing: border-box;
+.main-layout {
+    display: flex;
 }
 
-.mat-sidenav-container {
+section {
+  width: calc(100vw - 240px - 15px);
+}
+
+.sidenav-container, mat-drawer-container {
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  width: 240px !important;
+  //padding: var(--spacing-4) var(--spacing-2);
+  overflow: hidden;
+  box-sizing: border-box;
+
+}
+
+mat-drawer {
+  width: 240px !important;
+  padding: var(--spacing-4) var(--spacing-2);
+}
+
+mat-drawer-content {
+  padding: var(--spacing-4) var(--spacing-2);
+}
+
+.mat-sidenav-container, mat-drawer-container {
   height: calc(100vh - 64px);
 }
 

@@ -1,22 +1,42 @@
 <div class="main-layout">
-  <mat-sidenav-container autosize>
-    <mat-sidenav mode="side" opened class="sidenav-container">
+
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side">
+
       <mat-nav-list>
         @for (navLink of navLinksMapper; track navLink.path) {
-          <mat-list-item
-            routerLink="{{ navLink.path }}"
-            routerLinkActive="active-link"
-          >
-            {{ navLink.title }}
-          </mat-list-item>
+        <mat-list-item
+          routerLink="{{ navLink.path }}"
+          routerLinkActive="active-link"
+          (click)="hasSubselections(navLink.path) && drawer.toggle()"
+        >
+          <span #mainLink>{{ navLink.title }}</span>
+        </mat-list-item>
         }
       </mat-nav-list>
-    </mat-sidenav>
 
-    <mat-sidenav-content>
-      <ng-content />
+    </mat-drawer>
+    <mat-drawer-content>
 
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+      <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
+
+      <mat-nav-list>
+        @for (navLink of (currentSubselections$ | async); track navLink.path) {
+        <mat-list-item
+          routerLink="{{ navLink.path }}"
+          routerLinkActive="active-link"
+        >
+          {{ navLink.title }}
+        </mat-list-item>
+        }
+      </mat-nav-list>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <section>
+    <ng-content />
+  </section>
+
 </div>
 
