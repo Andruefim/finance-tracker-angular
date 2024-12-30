@@ -2,7 +2,7 @@ import { AfterViewInit, Component, DestroyRef, inject, OnInit, ViewChild } from 
 import { Router, RouterModule } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { map, Observable, takeUntil, tap } from 'rxjs';
+import { map, Observable, startWith, takeUntil, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 
@@ -47,6 +47,7 @@ export class SidenavComponent implements AfterViewInit {
   currentSubselections$: Observable<NavLink[] | null> = this.router.events
     .pipe(
       map(() => this.router.url),
+      startWith(this.router.url),
       map(
         path => NAV_LINKS_MAPPER
           .find(navLink => navLink.path === path)?.subselections ?? null
