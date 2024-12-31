@@ -11,7 +11,7 @@ interface Category {
 }
 
 @Component({
-  selector: 'app-categories',
+  selector: 'app-income-categories',
   imports: [
     MatCard,
     MatCardHeader,
@@ -21,21 +21,14 @@ interface Category {
     MatButton,
     MatToolbar
   ],
-  templateUrl: './categories.component.html',
-  styleUrl: './categories.component.scss'
+  templateUrl: './income-categories.component.html',
+  styleUrl: './income-categories.component.scss'
 })
-export class CategoriesComponent {
-  incomeCategories: Category[] = [
+export class IncomeCategoriesComponent {
+  categories: Category[] = [
     { id: 1, name: 'Salary', description: 'Monthly salary income', type: 'income' },
     { id: 2, name: 'Freelance', description: 'Income from freelancing', type: 'income' },
     { id: 3, name: 'Investments', description: 'Income from investments', type: 'income' },
-  ];
-
-  expenseCategories: Category[] = [
-    { id: 1, name: 'Food', description: 'Expenses for food and dining', type:  'expense' },
-    { id: 2, name: 'Transport', description: 'Expenses for transport', type:  'expense' },
-    { id: 2, name: 'Rent', description: 'Expenses for rent', type:  'expense' },
-    { id: 2, name: 'Shopping', description: 'Expenses for shopping', type: 'expense' },
   ];
 
   addCategory(isIncome: boolean): void {

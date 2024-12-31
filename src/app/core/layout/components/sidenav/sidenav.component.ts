@@ -2,8 +2,7 @@ import { AfterViewInit, Component, DestroyRef, inject, OnInit, ViewChild } from 
 import { Router, RouterModule } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { map, Observable, startWith, takeUntil, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 interface NavLink {
@@ -19,7 +18,8 @@ const NAV_LINKS_MAPPER: NavLink[] = [
     path: '/categories',
     title: 'Categories',
     subselections: [
-      { path: '/income', title: 'Icome' }
+      { path: '/categories/income', title: 'Icome' },
+      { path: '/categories/expense', title: 'Expense' }
     ]
   },
   { path: '/budgeting', title: 'Budgeting' },
@@ -50,7 +50,7 @@ export class SidenavComponent implements AfterViewInit {
       startWith(this.router.url),
       map(
         path => NAV_LINKS_MAPPER
-          .find(navLink => navLink.path === path)?.subselections ?? null
+          .find(navLink => path.includes(navLink.path))?.subselections ?? null
       )
   )
 
@@ -64,6 +64,6 @@ export class SidenavComponent implements AfterViewInit {
 
   hasSubselections(path: string): boolean {
     return !!NAV_LINKS_MAPPER
-      .find(navLink => navLink.path === path)?.subselections;
+      .find(navLink => path.includes(navLink.path))?.subselections;
   }
 }

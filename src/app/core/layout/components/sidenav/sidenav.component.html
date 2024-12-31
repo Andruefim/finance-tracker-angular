@@ -6,7 +6,7 @@
       <mat-nav-list>
         @for (navLink of navLinksMapper; track navLink.path) {
         <mat-list-item
-          routerLink="{{ navLink.path }}"
+          routerLink="{{ hasSubselections(navLink.path) ? navLink.subselections![0].path : navLink.path }}"
           routerLinkActive="active-link"
           (click)="hasSubselections(navLink.path) && drawer.toggle()"
         >

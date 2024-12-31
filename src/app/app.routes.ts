@@ -5,7 +5,8 @@ import { RegisterComponent } from './core/auth/pages/register/register.component
 import { LayoutComponent } from './core/layout/main-layout/layout.component';
 import { MinimalLayoutComponent } from './core/layout/minimal-layout/minimal-layout.component';
 import { AuthGuard } from './core/auth/auth.guard';
-import { CategoriesComponent } from './features/categories/categories.component';
+import { IncomeCategoriesComponent } from './features/categories/pages/income-categories/income-categories.component';
+import { ExpenseCategoriesComponent } from './features/categories/pages/expense-categories/expense-categories.component';
 
 const routeConfig: Routes = [
   {
@@ -16,7 +17,13 @@ const routeConfig: Routes = [
     ],
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'categories', component: CategoriesComponent },
+      {
+        path: 'categories',
+        children: [
+          { path: 'income', component: IncomeCategoriesComponent },
+          { path: 'expense', component: ExpenseCategoriesComponent }
+        ]
+      },
     ]
   },
 

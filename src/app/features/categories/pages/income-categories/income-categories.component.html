@@ -1,0 +1,43 @@
+<div class="categories-page">
+
+  <!--<mat-toolbar>
+    <span>Categories</span>
+  </mat-toolbar>-->
+
+  <div class="category-section">
+    <div class="income-categories">
+      <h2>Income Categories</h2>
+      <button mat-raised-button color="accent" (click)="addCategory(true)">
+        Add Income Category
+      </button>
+    </div>
+
+
+    <div class="categories-list">
+      @for (category of categories; track category.name) {
+      <mat-card class="category-card">
+        <mat-card-header>
+          <mat-card-title>{{ category.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ category.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="editCategory(category, true)">Edit</button>
+          <button mat-raised-button color="warn" (click)="deleteCategory(category.id, true)">Delete</button>
+        </mat-card-actions>
+      </mat-card>
+      }
+    </div>
+
+  </div>
+
+
+  <!--<mat-paginator>
+    [length]="totalCategories"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+    >
+  </mat-paginator>-->
+</div>
