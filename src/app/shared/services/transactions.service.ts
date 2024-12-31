@@ -3,12 +3,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Transaction } from '../models/transaction.model';
 import { EMPTY, Observable, catchError, throwError } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'my-auth-token'
-  }) 
-}
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +18,7 @@ export class TransactionsService {
 
   postTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http
-      .post<Transaction>('/api/Transactions', transaction, httpOptions)
+      .post<Transaction>('/api/Transactions', transaction)
       .pipe(
         catchError(this.handleError)
       )

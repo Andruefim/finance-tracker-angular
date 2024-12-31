@@ -2,13 +2,8 @@ import { Component, computed, input, Input, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
+import { Category } from '../../category.model';
 
-interface Category {
-  name: string;
-  description: string;
-  type: 'income' | 'expense';
-  id: number;
-}
 @Component({
   selector: 'app-base-categories',
   imports: [

@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseCategoriesComponent } from '../../components/base-categories/base-categories.component';
+import { Category } from '../../category.model';
 
-interface Category {
-  name: string;
-  description: string;
-  type: 'income' | 'expense';
-  id: number;
-}
 
 @Component({
   selector: 'app-expense-categories',
