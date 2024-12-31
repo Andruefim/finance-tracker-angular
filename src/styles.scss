@@ -24,7 +24,7 @@ html {
   --box-shadow-default: 0 2px 5px rgba(0, 0, 0, 0.1);
   --primary-color: mat.$cyan-palette;
   --tertiary-color: mat.$orange-palette;
-  --contrast-color: #252022;
+  --contrast-color: oklch(25.16% .008 308.11);
 }
 
 html, body { height: 100%; }

@@ -11,5 +11,7 @@
     <Folder Include="src\app\core\auth\components\" />
     <Folder Include="src\app\core\auth\pages\login\" />
     <Folder Include="src\app\core\auth\pages\register\" />
+    <Folder Include="src\app\features\categories\components\" />
+    <Folder Include="src\app\features\categories\pages\" />
   </ItemGroup>
 </Project>

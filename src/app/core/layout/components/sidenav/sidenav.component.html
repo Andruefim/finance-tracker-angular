@@ -18,7 +18,11 @@
     </mat-drawer>
     <mat-drawer-content>
 
-      <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
+      <div class="nav-back" (click)="drawer.toggle()">
+        <mat-icon >arrow_back</mat-icon>
+        {{ currentCategory?.title }}
+      </div>
+
 
       <mat-nav-list>
         @for (navLink of (currentSubselections$ | async); track navLink.path) {
