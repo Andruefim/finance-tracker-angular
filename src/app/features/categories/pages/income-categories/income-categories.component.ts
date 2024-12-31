@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatToolbar } from '@angular/material/toolbar';
+import { Component } from '@angular/core';
+import { BaseCategoriesComponent } from '../../components/base-categories/base-categories.component';
 
 interface Category {
   name: string;
@@ -12,17 +10,8 @@ interface Category {
 
 @Component({
   selector: 'app-income-categories',
-  imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatCardActions,
-    MatButton,
-    MatToolbar
-  ],
-  templateUrl: './income-categories.component.html',
-  styleUrl: './income-categories.component.scss'
+  imports: [BaseCategoriesComponent],
+  template: `<app-base-categories [type]='"income"' [categories]='categories'/>`,
 })
 export class IncomeCategoriesComponent {
   categories: Category[] = [
@@ -31,24 +20,4 @@ export class IncomeCategoriesComponent {
     { id: 3, name: 'Investments', description: 'Income from investments', type: 'income' },
   ];
 
-  addCategory(isIncome: boolean): void {
-    console.log(isIncome ? 'Add Income Category' : 'Add Expense Category');
-    // TODO: Add a dialog to add a category
-  }
-
-  editCategory(category: Category, isIncome: boolean): void {
-    console.log(
-      `Edit ${isIncome ? 'Income' : 'Expense'} Category:`,
-      category,
-    );
-    // TODO: Add a dialog to edit the category
-  }
-
-  deleteCategory(categoryId: number, isIncome: boolean): void {
-    console.log(
-      `Delete ${isIncome ? 'Income' : 'Expense'} Category ID:`,
-      categoryId
-    );
-    // TODO: Perform delete logic via api
-  }
 }

@@ -7,14 +7,14 @@
   <div class="category-section">
 
     <div class="expense-categories">
-      <h2>Expense Categories</h2>
-      <button mat-raised-button color="accent" (click)="addCategory(false)">
-        Add Expense Category
+      <h2>{{ isIncome() ? 'Income Categories' : 'Expense Categories' }}</h2>
+      <button mat-raised-button color="accent" (click)="addCategory()">
+        {{ isIncome() ? 'Add Income Category' : 'Add Expense Category' }}
       </button>
     </div>
 
     <div class="categories-list">
-      @for (category of categories; track category.name) {
+      @for (category of categories(); track category.name) {
       <mat-card class="category-card">
         <mat-card-header>
           <mat-card-title>{{ category.name }}</mat-card-title>
@@ -23,8 +23,8 @@
           <p>{{ category.description }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="editCategory(category, false)">Delete</button>
-          <button mat-raised-button color="warn" (click)="deleteCategory(category.id, false)">Delete</button>
+          <button mat-raised-button color="primary" (click)="editCategory(category)">Edit</button>
+          <button mat-raised-button color="warn" (click)="deleteCategory(category.id)">Delete</button>
         </mat-card-actions>
       </mat-card>
       }
