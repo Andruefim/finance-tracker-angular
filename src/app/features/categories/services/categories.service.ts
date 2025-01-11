@@ -9,6 +9,10 @@ import { catchError, EMPTY, Observable } from 'rxjs';
 export class CategoriesService {
   readonly http = inject(HttpClient);
 
+  public refetchCategoriesData() {
+    // TODO: this.categoriesDataSubject.next(null);
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.error('An error occurred:', error.error);
 

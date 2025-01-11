@@ -44,7 +44,7 @@ export class TransactionDialogButtonComponent {
 
   transactionFormGroup = this.formBuilder.group({
     category: ['', Validators.required],
-    amount: [0, [Validators.required, Validators.min(0.01)]],
+    amount: [0, Validators.required],
     date: [new Date()],
     description: [''],
   })
@@ -55,11 +55,11 @@ export class TransactionDialogButtonComponent {
       contentTemplate: template,
       isFormValid: () => this.transactionFormGroup.valid,
       onSubmit: () => {
-        if (this.transactionFormGroup.valid) {
-          this.postTransaction(this.transformSubmitValues(this.transactionFormGroup.value as unknown as Transaction));
-          this.dialogService.closeDialog();
-          this.transactionFormGroup.reset();
-        }
+        if (!this.transactionFormGroup.valid) return;
+
+        this.postTransaction(this.transformSubmitValues(this.transactionFormGroup.value as unknown as Transaction));
+        this.dialogService.closeDialog();
+        this.transactionFormGroup.reset();
       }
     });
   }
@@ -69,12 +69,8 @@ export class TransactionDialogButtonComponent {
       .postTransaction(transaction)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (result) => {
-          this.dashboardService.refetchDashboardData();
-        },
-        error: err => {
-          console.error(err);
-        }
+        next: res => this.dashboardService.refetchDashboardData(),
+        error: err => console.log(err)
       })
   }
 
