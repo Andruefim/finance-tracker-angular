@@ -8,9 +8,7 @@
 
     <div class="expense-categories">
       <h2>{{ isIncome() ? 'Income Categories' : 'Expense Categories' }}</h2>
-      <button mat-raised-button color="accent" (click)="addCategory()">
-        {{ isIncome() ? 'Add Income Category' : 'Add Expense Category' }}
-      </button>
+      <app-add-category-dialog-button [type]="type()"/>
     </div>
 
     <div class="categories-list">

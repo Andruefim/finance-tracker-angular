@@ -3,6 +3,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { Category } from '../../category.model';
+import { AddCategoryDialogButtonComponent } from '../add-category-dialog-button/add-category-dialog-button.component';
 
 @Component({
   selector: 'app-base-categories',
@@ -13,13 +14,14 @@ import { Category } from '../../category.model';
     MatCardContent,
     MatCardActions,
     MatButton,
-    MatToolbar
+    MatToolbar,
+    AddCategoryDialogButtonComponent
   ],
   templateUrl: './base-categories.component.html',
   styleUrl: './base-categories.component.scss'
 })
 export class BaseCategoriesComponent {
-  type = input<Category['type']>()
+  type = input.required<Category['type']>()
   categories = input<Category[]>();
   isIncome = computed(() => this.type() === 'income');
 
@@ -36,7 +38,7 @@ export class BaseCategoriesComponent {
     // TODO: Add a dialog to edit the category
   }
 
-  deleteCategory(categoryId: number): void {
+  deleteCategory(categoryId?: number): void {
     console.log(
       `Delete ${this.isIncome() ? 'Income' : 'Expense'} Category ID:`,
       categoryId

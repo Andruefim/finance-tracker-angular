@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, TemplateRef } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { DialogService } from '../../../../shared/services/dialog.service';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../category.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-add-category-dialog-button',
@@ -28,6 +29,7 @@ export class AddCategoryDialogButtonComponent {
   readonly categoriesService = inject(CategoriesService);
   readonly formBuilder = inject(FormBuilder);
   readonly destroyRef = inject(DestroyRef);
+  type = input.required<Category['type']>();
 
   categoryFormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -49,7 +51,10 @@ export class AddCategoryDialogButtonComponent {
 
   postCategory(category: Category): void {
     this.categoriesService
-      .postCategory(category)
+      .postCategory({
+        ...category,
+        type: this.type()
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: res => this.categoriesService.refetchCategoriesData(),
