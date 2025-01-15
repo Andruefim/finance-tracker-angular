@@ -28,11 +28,11 @@ export class EditCategoryDialogButtonComponent {
   readonly categoriesService = inject(CategoriesService);
   readonly formBuilder = inject(FormBuilder);
   readonly destroyRef = inject(DestroyRef);
-  category = input.required<Category>();
+  category = input<Category>();
 
   categoryFormGroup = this.formBuilder.group({
-    name: [this.category().name, Validators.required],
-    description: [this.category().description],
+    name: [this.category()?.name, Validators.required],
+    description: [this.category()?.description],
   })
 
   openDialog(template: TemplateRef<any>) {

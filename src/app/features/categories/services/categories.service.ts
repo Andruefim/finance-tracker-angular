@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Category } from '../category.model';
+import { CategoriesData, Category } from '../category.model';
 import { BehaviorSubject, catchError, EMPTY, Observable, switchMap } from 'rxjs';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class CategoriesService {
   categoriesData$ = this.categoriesDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<Category[]>('/api/categories')
+        .get<CategoriesData[]>('/api/categories')
         .pipe(
           catchError(this.handleError)
         )

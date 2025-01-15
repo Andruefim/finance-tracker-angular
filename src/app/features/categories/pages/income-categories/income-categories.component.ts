@@ -2,21 +2,23 @@ import { Component, inject } from '@angular/core';
 import { BaseCategoriesComponent } from '../../components/base-categories/base-categories.component';
 import { Category } from '../../category.model';
 import { CategoriesService } from '../../services/categories.service';
+import { AsyncPipe } from '@angular/common';
+import { map } from 'rxjs';
 
 
 @Component({
   selector: 'app-income-categories',
-  imports: [BaseCategoriesComponent],
-  template: `<app-base-categories [type]='"income"' [categories]='categories'/>`,
+  imports: [
+    BaseCategoriesComponent,
+    AsyncPipe
+  ],
+  template: `<app-base-categories [type]='"Income"' [categories]='(categoriesData$ | async) ?? []'/>`,
 })
 export class IncomeCategoriesComponent {
   readonly categoriesService = inject(CategoriesService);
 
-  categories: Category[] = [
-    { id: 1, name: 'Salary', description: 'Monthly salary income', type: 'income' },
-    { id: 2, name: 'Freelance', description: 'Income from freelancing', type: 'income' },
-    { id: 3, name: 'Investments', description: 'Income from investments', type: 'income' },
-  ];
-
-  categoriesData$ = this.categoriesService.categoriesData$;
+  categoriesData$ = this.categoriesService.categoriesData$
+    .pipe(
+      map(categoriesData => categoriesData.find(d => d.type === 'Income')?.data)
+    )
 }

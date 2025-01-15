@@ -21,7 +21,7 @@
           <p>{{ category.description }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="editCategory(category)">Edit</button>
+          <app-edit-category-dialog-button [category]="category"/>
           <button mat-raised-button color="warn" (click)="deleteCategory(category.id)">Delete</button>
         </mat-card-actions>
       </mat-card>

@@ -6,6 +6,7 @@ import { Category } from '../../category.model';
 import { AddCategoryDialogButtonComponent } from '../add-category-dialog-button/add-category-dialog-button.component';
 import { CategoriesService } from '../../services/categories.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EditCategoryDialogButtonComponent } from '../edit-category-dialog-button/edit-category-dialog-button.component';
 
 @Component({
   selector: 'app-base-categories',
@@ -17,7 +18,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatCardActions,
     MatButton,
     MatToolbar,
-    AddCategoryDialogButtonComponent
+    AddCategoryDialogButtonComponent,
+    EditCategoryDialogButtonComponent
   ],
   templateUrl: './base-categories.component.html',
   styleUrl: './base-categories.component.scss'
@@ -27,9 +29,11 @@ export class BaseCategoriesComponent {
   readonly destroyRef = inject(DestroyRef);
   type = input.required<Category['type']>()
   categories = input<Category[]>();
-  isIncome = computed(() => this.type() === 'income');
+  isIncome = computed(() => this.type() === 'Income');
 
-  deleteCategory(categoryId: number): void {
+  deleteCategory(categoryId?: number): void {
+    if (!categoryId) return;
+
     this.categoriesService
       .deleteCategory(categoryId)
       .pipe(takeUntilDestroyed(this.destroyRef))
