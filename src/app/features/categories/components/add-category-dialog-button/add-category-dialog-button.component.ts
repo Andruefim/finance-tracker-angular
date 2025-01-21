@@ -44,7 +44,8 @@ export class AddCategoryDialogButtonComponent {
       onSubmit: () => {
         if (!this.categoryFormGroup.valid) return;
 
-        this.postCategory(this.categoryFormGroup.value as unknown as Category)
+        this.postCategory(this.categoryFormGroup.value as unknown as Category);
+        dialogRef.close()
       }
     })
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent } from '@angular/material/dialog';
@@ -23,7 +23,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './edit-category-dialog-button.component.html',
   styleUrl: './edit-category-dialog-button.component.scss'
 })
-export class EditCategoryDialogButtonComponent {
+export class EditCategoryDialogButtonComponent implements OnChanges {
   readonly dialogService = inject(DialogService);
   readonly categoriesService = inject(CategoriesService);
   readonly formBuilder = inject(FormBuilder);
@@ -33,7 +33,16 @@ export class EditCategoryDialogButtonComponent {
   categoryFormGroup = this.formBuilder.group({
     name: [this.category()?.name, Validators.required],
     description: [this.category()?.description],
-  })
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['category'] && this.category()) {
+      this.categoryFormGroup.patchValue({
+        name: this.category()?.name,
+        description: this.category()?.description
+      }) 
+    }
+  }
 
   openDialog(template: TemplateRef<any>) {
     const dialogRef = this.dialogService.openDialog({
@@ -42,15 +51,18 @@ export class EditCategoryDialogButtonComponent {
       isFormValid: () => this.categoryFormGroup.valid,
       onSubmit: () => {
         if (!this.categoryFormGroup.valid) return;
-
-        this.editCategory(this.categoryFormGroup.value as unknown as Category)
+        this.editCategory(this.categoryFormGroup.value as unknown as Category);
+        dialogRef.close();
       }
     })
   }
 
   editCategory(category: Category): void {
     this.categoriesService
-      .editCategory(category)
+      .editCategory({
+        ...this.category(),
+        ...category,
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: res => this.categoriesService.refetchCategoriesData(),
