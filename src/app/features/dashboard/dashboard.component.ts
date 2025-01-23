@@ -8,6 +8,9 @@ import { TransactionsTableComponent } from './components/transactions-table/tran
 import { TransactionDialogButtonComponent } from './components/transaction-dialog-button/transaction-dialog-button.component';
 import { DashboardService } from './services/dashboard.service';
 import { TotalBalancePipe } from './pipes/total-balance.pipe';
+import { CategoriesService } from '../categories/services/categories.service';
+import { map, tap } from 'rxjs';
+import { Categories } from '../categories/category.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,6 +31,16 @@ import { TotalBalancePipe } from './pipes/total-balance.pipe';
 })
 export class DashboardComponent {
   readonly dashboardService = inject(DashboardService);
+  readonly categoriesService = inject(CategoriesService);
+
   dashboardData$ = this.dashboardService.dashboardData$;
+  expensesCategoriesData$ = this.categoriesService.categoriesData$
+    .pipe(
+      map(categoriesData => new Categories(categoriesData).toCategoryNames('Expenses'))
+    );
+  incomeCategoriesData$ = this.categoriesService.categoriesData$
+    .pipe(
+      map(categoriesData => new Categories(categoriesData).toCategoryNames('Income'))
+    );
 
 }

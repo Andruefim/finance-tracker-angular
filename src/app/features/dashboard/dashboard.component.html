@@ -8,11 +8,11 @@
   <section class="quick-actions">
     <app-transaction-dialog-button 
       [title]="'Add Income'" 
-      [categories]="['Salary', 'Freelance', 'Investments']">
+      [categories]="(incomeCategoriesData$ | async) || []">
     </app-transaction-dialog-button>
     <app-transaction-dialog-button 
       [title]="'Add Expense'" 
-      [categories]="['Food', 'Transport', 'Rent', 'Shopping']">
+      [categories]="(expensesCategoriesData$ | async) || []">
     </app-transaction-dialog-button>
   </section>
 
