@@ -18,8 +18,8 @@ export class Categories {
   _strategies = new Map();
   constructor(categories: CategoriesData[]) {
     this._categories = categories;
-    this._strategies.set('Expenses', ExpenseCategories);
-    this._strategies.set('Income', IncomeCategories);
+    this._strategies.set(ExpenseCategories.type, ExpenseCategories);
+    this._strategies.set(IncomeCategories.type, IncomeCategories);
   }
 
   toCategoryNames(type: CategoriesData['type']) {

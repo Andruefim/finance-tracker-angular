@@ -4,4 +4,5 @@ export interface User {
   totalBalance: number;
   token: string;
   userId: string;
+  emailConfirmed: boolean;
 }

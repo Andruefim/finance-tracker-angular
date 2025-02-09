@@ -8,6 +8,7 @@ import { AuthGuard } from './core/auth/auth.guard';
 import { IncomeCategoriesComponent } from './features/categories/pages/income-categories/income-categories.component';
 import { ExpenseCategoriesComponent } from './features/categories/pages/expense-categories/expense-categories.component';
 import { BaseCategoriesComponent } from './features/categories/components/base-categories/base-categories.component';
+import { ConfirmEmailComponent } from './core/auth/pages/confirm-email/confirm-email.component';
 
 const routeConfig: Routes = [
   {
@@ -40,6 +41,10 @@ const routeConfig: Routes = [
         path: 'register',
         component: RegisterComponent
       },
+      {
+        path: 'confirm-email',
+        component: ConfirmEmailComponent
+      }
     ]
   },
 

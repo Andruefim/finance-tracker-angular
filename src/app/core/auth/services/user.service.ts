@@ -57,6 +57,16 @@ export class UserService {
       .post<{ message: string }>("/api/Authenticate/register", credentials)
   }
 
+  sendEmailConfirmation(): Observable<{ confirmationSent: boolean }> {
+    return this.http
+      .post<{ confirmationSent: boolean }>("/api/Authenticate/send-email-confirmation", {})
+  }
+
+  confirmEmail(): Observable<{ emailConfirmed: boolean }> {
+    return this.http
+      .post<{ emailConfirmed: boolean }>("/api/Authenticate/confirm-email", {})
+  }
+
   setAuth(user: User): void {
     console.log('setAuth', user)
     user.token && this.jwtService.saveToken(user.token);

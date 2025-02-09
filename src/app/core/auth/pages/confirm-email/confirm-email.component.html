@@ -1,0 +1,15 @@
+<app-auth-card title="Email confirmation">
+
+  <form [formGroup]="confirmEmailForm" (submit)="confirmEmail()">
+    <p class="subtitle">Confirmation code was sent to your email adress. Please write it below to verify your email.</p>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Confirmation code</mat-label>
+      <input matInput placeholder="Confirmation code" formControlName="code" type="text" />
+    </mat-form-field>
+
+    <p>Haven't received an email? <span (click)="sendEmailConfirmation()" class="tertiary">Send again</span></p>
+
+    <button mat-raised-button color="primary" [disabled]="confirmEmailForm.invalid" type="submit">Continue</button>
+  </form>
+</app-auth-card>
