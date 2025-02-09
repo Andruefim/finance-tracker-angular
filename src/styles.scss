@@ -36,6 +36,10 @@ body {
   color: var(--mat-sys-on-surface);
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .tertiary {
   color: var(--mat-sys-on-primary-container);
 }

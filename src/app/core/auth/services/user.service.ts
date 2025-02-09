@@ -38,6 +38,16 @@ export class UserService {
     )
   );
 
+  refetchUser(): Observable<User> {
+    return this.http
+      .get<User>('/api/Authenticate/user').pipe(
+        tap({
+          next: (user) => this.setAuth(user),
+          error: () => this.purgeAuth(),
+        }),
+      );
+  }
+
 
   login(credentials: {
     email: string;
@@ -62,9 +72,11 @@ export class UserService {
       .post<{ confirmationSent: boolean }>("/api/Authenticate/send-email-confirmation", {})
   }
 
-  confirmEmail(): Observable<{ emailConfirmed: boolean }> {
+  confirmEmail(variables: {
+    code: string
+  }): Observable<{ emailConfirmed: boolean }> {
     return this.http
-      .post<{ emailConfirmed: boolean }>("/api/Authenticate/confirm-email", {})
+      .post<{ emailConfirmed: boolean }>("/api/Authenticate/confirm-email", variables)
   }
 
   setAuth(user: User): void {

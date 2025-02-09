@@ -5,10 +5,10 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Confirmation code</mat-label>
-      <input matInput placeholder="Confirmation code" formControlName="code" type="text" />
+      <input matInput placeholder="000-000" formControlName="code" type="text" />
     </mat-form-field>
 
-    <p>Haven't received an email? <span (click)="sendEmailConfirmation()" class="tertiary">Send again</span></p>
+    <p>Haven't received an email? <span (click)="sendEmailConfirmation()" class="tertiary pointer">Send again</span></p>
 
     <button mat-raised-button color="primary" [disabled]="confirmEmailForm.invalid" type="submit">Continue</button>
   </form>

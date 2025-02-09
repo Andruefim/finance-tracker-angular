@@ -7,6 +7,7 @@ import { AuthCardComponent } from '../../components/auth-card/auth-card.componen
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-confirm-email',
@@ -26,6 +27,11 @@ export class ConfirmEmailComponent implements AfterViewInit {
   readonly router = inject(Router);
   private formBuilder = inject(FormBuilder);
   readonly destroyRef = inject(DestroyRef);
+  $user = this.userService.currentUser$.pipe(
+    tap(user => user?.emailConfirmed && this.router.navigate(['/dashboard']))
+  )
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe();
 
   confirmEmailForm = this.formBuilder.group({
     code: ['', Validators.required],
@@ -37,7 +43,7 @@ export class ConfirmEmailComponent implements AfterViewInit {
   }
 
   initEmailConfirmation(): void {
-    !!localStorage.getItem('confirmationSent') && this.sendEmailConfirmation();
+    !sessionStorage.getItem('confirmationSent') && this.sendEmailConfirmation();
   }
 
   sendEmailConfirmation(): void {
@@ -45,17 +51,25 @@ export class ConfirmEmailComponent implements AfterViewInit {
       .sendEmailConfirmation()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: response => response.confirmationSent && localStorage.setItem('confirmationSent', 'true'),
+        next: response => response.confirmationSent && sessionStorage.setItem('confirmationSent', 'true'),
         error: (error) => console.error('Error', error),
       })
   }
 
   confirmEmail(): void {
     this.userService
-      .confirmEmail()
+      .confirmEmail({
+        code: this.confirmEmailForm.value.code ?? ''
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: response => response.emailConfirmed && this.router.navigate(['/dashboard']),
+        next: response => {
+          if (response.emailConfirmed) {
+            this.userService.refetchUser();
+
+            this.router.navigate(['/dashboard'])
+          } 
+        },
         error: (error) => this.confirmEmailForm.setErrors({ code: error }),
       })
   }
