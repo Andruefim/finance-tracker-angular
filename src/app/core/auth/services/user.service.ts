@@ -78,6 +78,7 @@ export class UserService {
   }): Observable<{ emailConfirmed: boolean }> {
     return this.http
       .post<{ emailConfirmed: boolean }>(`${environment.apiUrl}/api/Authenticate/confirm-email`, variables)
+      .pipe(tap((confirmation) => confirmation.emailConfirmed && this.refetchUser()))
   }
 
   setAuth(user: User): void {
