@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Transaction } from '../models/transaction.model';
 import { EMPTY, Observable, catchError, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class TransactionsService {
 
   postTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http
-      .post<Transaction>('/api/Transactions', transaction)
+      .post<Transaction>(`${environment.apiUrl}/api/Transactions`, transaction)
       .pipe(
         catchError(this.handleError)
       )

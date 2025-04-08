@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CategoriesData, Category } from '../category.model';
 import { BehaviorSubject, catchError, EMPTY, Observable, switchMap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class CategoriesService {
   categoriesData$ = this.categoriesDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<CategoriesData[]>('/api/categories')
+        .get<CategoriesData[]>(`${environment.apiUrl}/api/categories`)
         .pipe(
           catchError(this.handleError)
         )
@@ -33,7 +34,7 @@ export class CategoriesService {
 
   postCategory(category: Category): Observable<Category> {
     return this.http
-      .post<Category>('/api/categories', category)
+      .post<Category>(`${environment.apiUrl}/api/categories`, category)
       .pipe(
         catchError(this.handleError)
       )
@@ -41,7 +42,7 @@ export class CategoriesService {
 
   editCategory(category: Category): Observable<Category> {
     return this.http
-      .put<Category>(`/api/categories/${category.id}`, category)
+      .put<Category>(`${environment.apiUrl}/api/categories/${category.id}`, category)
       .pipe(
         catchError(this.handleError)
       )
@@ -49,7 +50,7 @@ export class CategoriesService {
 
   deleteCategory(categoryId: Category['id']): Observable<Category> {
     return this.http
-      .delete<Category>(`/api/categories/${categoryId}`)
+      .delete<Category>(`${environment.apiUrl}/api/categories/${categoryId}`)
       .pipe(
         catchError(this.handleError)
       )

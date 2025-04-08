@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, distinctUntilChanged, map, shareReplay, sw
 import { Router } from "@angular/router";
 import { User } from '../user.model';
 import { JwtService } from './jwt.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class UserService {
         return this.currentUserSubject.asObservable();
       }
       return this.http
-        .get<User>('/api/Authenticate/user').pipe(
+        .get<User>(`${environment.apiUrl}/api/Authenticate/user`).pipe(
           tap({
             next: user => this.setAuth(user),
             error: () => this.purgeAuth(),
@@ -40,7 +41,7 @@ export class UserService {
 
   refetchUser(): Observable<User> {
     return this.http
-      .get<User>('/api/Authenticate/user').pipe(
+      .get<User>(`${environment.apiUrl}/api/Authenticate/user`).pipe(
         tap({
           next: (user) => this.setAuth(user),
           error: () => this.purgeAuth(),
@@ -54,7 +55,7 @@ export class UserService {
     password: string;
   }): Observable<User> {
     return this.http
-      .post<User>("/api/Authenticate/login", credentials)
+      .post<User>(`${environment.apiUrl}/api/Authenticate/login`, credentials)
       .pipe(tap((user) => this.setAuth(user)));
   }
 
@@ -64,19 +65,19 @@ export class UserService {
     password: string;
   }): Observable<{ message: string }> {
     return this.http
-      .post<{ message: string }>("/api/Authenticate/register", credentials)
+      .post<{ message: string }>(`${environment.apiUrl}/api/Authenticate/register`, credentials)
   }
 
   sendEmailConfirmation(): Observable<{ confirmationSent: boolean }> {
     return this.http
-      .post<{ confirmationSent: boolean }>("/api/Authenticate/send-email-confirmation", {})
+      .post<{ confirmationSent: boolean }>(`${environment.apiUrl}/api/Authenticate/send-email-confirmation`, {})
   }
 
   confirmEmail(variables: {
     code: string
   }): Observable<{ emailConfirmed: boolean }> {
     return this.http
-      .post<{ emailConfirmed: boolean }>("/api/Authenticate/confirm-email", variables)
+      .post<{ emailConfirmed: boolean }>(`${environment.apiUrl}/api/Authenticate/confirm-email`, variables)
   }
 
   setAuth(user: User): void {

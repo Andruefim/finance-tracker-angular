@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TransactionsChartData, TransactionsRaw } from '../models/transactions-chart-data.model';
 import { Transaction } from '../../../shared/models/transaction.model';
 import { ExpensesChartData, ExpensesRawData, ExpensesData } from '../models/expenses-chart-data.model';
+import { environment } from '../../../../environments/environment';
 
 export interface DashboardData {
   transactionsChartData?: TransactionsChartData[],
@@ -34,7 +35,7 @@ export class DashboardService {
   private transactionsChartData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<TransactionsRaw[]>('/api/transactions/charts/transactions-chart')
+        .get<TransactionsRaw[]>(`${environment.apiUrl}/api/transactions/charts/transactions-chart`)
         .pipe(
           map(chartData => chartData.map(seriesData => TransactionsChartData.toMonthlyChartData(seriesData))),
           catchError(this.handleError)
@@ -45,7 +46,7 @@ export class DashboardService {
   private expensesChartData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<ExpensesRawData[]>('api/transactions/charts/expenses-chart')
+        .get<ExpensesRawData[]>(`${environment.apiUrl}api/transactions/charts/expenses-chart`)
         .pipe(
           map(expenses => expenses.map(expense => new ExpensesChartData(expense).getChartData())),
           catchError(this.handleError)
@@ -55,7 +56,7 @@ export class DashboardService {
 
   private transactionsTableData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
-      this.http.get<Transaction[]>('/api/transactions').pipe(
+      this.http.get<Transaction[]>(`${environment.apiUrl}/api/transactions`).pipe(
         map(transactions => transactions.reverse().map(transaction => new Transaction(transaction))),
         catchError(this.handleError)
       )

@@ -7,10 +7,11 @@ const { env } = require('process');
 const PROXY_CONFIG = [
   {
     context: [
-      "/api"
+      "/api/Authenticate/user"
     ],
-    target: "http://localhost:7040/api",
-    secure: false,"start": "ng serve --proxy-config src/proxy.conf.js"
+    target: "http://localhost:7040",
+    secure: false,
+    //"start": "ng serve --proxy-config src/proxy.conf.js"
   }
 ]
 
