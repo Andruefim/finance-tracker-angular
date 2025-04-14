@@ -11,7 +11,7 @@ export class Transaction {
     this.id = transactionData.id;
     this.date = transactionData.date;
     this.category = transactionData.category;
-    this.amount = transactionData.amount;
+    this.amount = +transactionData.amount;
     this.description = transactionData.description;
   }
 }

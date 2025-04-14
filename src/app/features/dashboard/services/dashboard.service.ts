@@ -1,6 +1,6 @@
 import { Injectable, Signal, signal, DestroyRef, inject } from '@angular/core';
 import { Observable, EMPTY, catchError, combineLatest, forkJoin, Subject, BehaviorSubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TransactionsChartData, TransactionsRaw } from '../models/transactions-chart-data.model';
 import { Transaction } from '../../../shared/models/transaction.model';
@@ -27,7 +27,7 @@ export class DashboardService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('An error occurred:', error.error);
+    console.error('An error occurred:', error);
 
     return EMPTY;
   }
@@ -46,7 +46,7 @@ export class DashboardService {
   private expensesChartData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
       this.http
-        .get<ExpensesRawData[]>(`${environment.apiUrl}api/transactions/charts/expenses-chart`)
+        .get<ExpensesRawData[]>(`${environment.apiUrl}/api/transactions/charts/expenses-chart`)
         .pipe(
           map(expenses => expenses.map(expense => new ExpensesChartData(expense).getChartData())),
           catchError(this.handleError)
@@ -57,7 +57,10 @@ export class DashboardService {
   private transactionsTableData$ = this.dashboardDataAction$.pipe(
     switchMap((_) =>
       this.http.get<Transaction[]>(`${environment.apiUrl}/api/transactions`).pipe(
-        map(transactions => transactions.reverse().map(transaction => new Transaction(transaction))),
+        tap(transactions => console.log(transactions)),
+        map(transactions => transactions.reverse()
+          .map(transaction => new Transaction(transaction))
+        ),
         catchError(this.handleError)
       )
     )

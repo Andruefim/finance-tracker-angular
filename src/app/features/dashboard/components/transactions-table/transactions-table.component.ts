@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { CurrencyPipe, DatePipe, AsyncPipe } from '@angular/common';
 import { Transaction } from '../../../../shared/models/transaction.model';

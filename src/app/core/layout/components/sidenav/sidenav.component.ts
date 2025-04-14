@@ -6,6 +6,7 @@ import { map, Observable, startWith, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface NavLink {
   path: string;
@@ -45,6 +46,7 @@ const NAV_LINKS_MAPPER: NavLink[] = [
 export class SidenavComponent implements AfterViewInit {
   readonly router = inject(Router);
   readonly destroyRef = inject(DestroyRef);
+  readonly cdr = inject(ChangeDetectorRef);
   navLinksMapper = NAV_LINKS_MAPPER;
   @ViewChild('drawer') drawer!: MatDrawer;
   currentCategory?: NavLink;
@@ -57,7 +59,10 @@ export class SidenavComponent implements AfterViewInit {
           .find(navLink => path.includes(navLink.path))
       ),
       tap(
-        category => this.currentCategory = category
+        category => {
+          this.currentCategory = category;
+          this.cdr.detectChanges();
+        }
       ),
       map(
         category => category?.subselections ?? null
@@ -65,7 +70,8 @@ export class SidenavComponent implements AfterViewInit {
   )
 
   ngAfterViewInit() {
-    this.toggleDrawer(this.router.url)
+    this.toggleDrawer(this.router.url);
+    this.cdr.detectChanges();
   }
 
   toggleDrawer(path: string): void {
